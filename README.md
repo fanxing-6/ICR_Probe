@@ -1,6 +1,6 @@
 # ICR Probe
 [ACL 2025] ICR Probe: Tracking Hidden State Dynamics for Reliable Hallucination Detection in LLMs
-### Abstract
+## Abstract
 Large language models (LLMs) excel at various natural language processing tasks, but their tendency to generate hallucinations undermines their reliability. Existing hallucination detection methods leveraging hidden states predominantly focus on static and isolated representations, overlooking their dynamic evolution across layers, which limits efficacy. To address this limitation, we shift the focus to the hidden state update process and introduce a novel metric, the **ICR** Score (**I**nformation **C**ontribution to **R**esidual Stream), which quantifies the contribution of modules to the hidden states' update. We empirically validate that the ICR Score is effective and reliable in distinguishing hallucinations. Building on these insights, we propose a hallucination detection method, the ICR Probe, which captures the cross-layer evolution of hidden states. Experimental results show that the ICR Probe achieves superior performance with significantly fewer parameters. Furthermore, ablation studies and case analyses offer deeper insights into the underlying mechanism of this method, improving its interpretability.
 
 
@@ -9,7 +9,7 @@ Large language models (LLMs) excel at various natural language processing tasks,
 
 Overview of the ICR Score computation and ICR Probe detection process.
 
-### Usage
+## Usage
 To use the ICR Probe for hallucination detection, follow these steps:
 1. **Compute ICR Scores**: Use the provided code to compute the ICR Scores for your model and dataset.
 
@@ -58,8 +58,12 @@ icr_scores, top_p_mean = icr_calculator.compute_icr(
 
 ```python
 from src.icr_probe import ICRProbeTrainer
-
-# ... Assuming we have the ICR scores and other necessary data ...
+from src.config import Config
+# -----------------------------------------------------------
+# Assume you have the ICR scores and other necessary data
+#   • train_loader: DataLoader for training data with ICR scores
+#   • val_loader: DataLoader for validation data with ICR scores
+# -----------------------------------------------------------
 train_loader, val_loader = ...  # Load your ICR scores 
 config = Config.from_args()
     
@@ -72,5 +76,11 @@ trainer.setup_data()
 trainer.setup_model()
 trainer.train()
 ```
+## Citation
+If you find this work useful, please cite our paper:
+```bibtex
 
+```
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
