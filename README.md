@@ -76,6 +76,11 @@ trainer.setup_data()
 trainer.setup_model()
 trainer.train()
 ```
+
+## Citation
+Coming soon! Our paper has been accepted to ACL 2025. The citation information will be updated once the proceedings are published.
+
+
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
