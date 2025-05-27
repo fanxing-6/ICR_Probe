@@ -5,5 +5,6 @@ Large language models (LLMs) excel at various natural language processing tasks,
 
 
 
-![ICR Probe Overview](figure\overview_v2.png)
+![ICR Probe Overview](figure/overview_v2.png)
+
 Overview of the ICR Score computation and ICR Probe detection process.
