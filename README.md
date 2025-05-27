@@ -76,11 +76,6 @@ trainer.setup_data()
 trainer.setup_model()
 trainer.train()
 ```
-## Citation
-If you find this work useful, please cite our paper:
-```bibtex
-
-```
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
