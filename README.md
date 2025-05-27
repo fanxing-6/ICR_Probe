@@ -17,7 +17,11 @@ To use the ICR Probe for hallucination detection, follow these steps:
 import torch
 from src.icr_score import ICRScore
 
-# ... Assuming we have obtained hidden_states and attentions ...
+# -----------------------------------------------------------
+# Assume you have already run a forward pass and cached:
+#   • hidden_states: list[output_size+1, layer, batch](seq_len/1, dim)
+#   • attentions:    list[output_size+1, layer, batch](n_head, seq_len, seq_len)
+# -----------------------------------------------------------
 hidden_states = [...] 
 attentions = [...] 
 
