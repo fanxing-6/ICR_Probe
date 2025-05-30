@@ -106,10 +106,10 @@ class ICRScore:
         Set the attention scores of positions other than the specified ones to 0.
 
         :param attn_all: A 4D tensor with shape (layer_num, head_num, token_num, token_num).
-        :param a: Start position for the first range of tokens to keep.
-        :param b: End position for the first range of tokens to keep.
-        :param c: Start position for the second range of tokens to keep.
-        :return: The modified tensor with other attn scores set to 0.
+        :param a: Start position of user.
+        :param b: End position of user.
+        :param c: Start position.
+        :return: The masked tensor with other attn scores set to 0.
         """
         layer_num, head_num, token_num, _ = attn_all.size()
         a, b, c = self.core_positions['user_prompt_start'], self.core_positions['user_prompt_end'], self.core_positions[
