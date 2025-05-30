@@ -111,7 +111,6 @@ class ICRScore:
         :param c: Start position for the second range of tokens to keep.
         :return: The modified tensor with other attn scores set to 0.
         """
-
         layer_num, head_num, token_num, _ = attn_all.size()
         a, b, c = self.core_positions['user_prompt_start'], self.core_positions['user_prompt_end'], self.core_positions[
             'response_start']
@@ -130,11 +129,8 @@ class ICRScore:
     def _calculate_skewness_entropy(self, attn_map):
      
         sequence_size = attn_map.size(0)
-
-
         row_sums = attn_map.sum(dim=1, keepdim=True)
         row_normalized = attn_map / (row_sums + 1e-12)  
-
         indices = torch.arange(1, sequence_size + 1, device=attn_map.device, dtype=attn_map.dtype).view(1, -1)
 
         mean_indices = (row_normalized * indices).sum(dim=1)
