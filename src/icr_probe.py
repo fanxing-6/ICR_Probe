@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+ICR探针训练器模块
+
+这个模块实现了用于训练ICR（Interpretable Chain-of-thought Reasoning）
+探针的训练器类。该探针用于分析和评估大型语言模型的推理链质量。
+"""
+
 import os
 import json
 import logging
@@ -20,9 +27,26 @@ logger = logging.getLogger(__name__)
 
 
 class ICRProbeTrainer:
-    """Trainer class for ICR Probe."""
+    """
+    ICR探针训练器类
+    
+    该类负责ICR探针模型的训练、验证和评估过程。包括：
+    - 数据加载和预处理
+    - 模型训练和验证
+    - 性能指标计算和监控
+    - 模型保存和加载
+    """
     
     def __init__(self, model, train_loader, val_loader, config):
+        """
+        初始化训练器。
+
+        Args:
+            model: ICR探针模型实例
+            train_loader: 训练数据加载器
+            val_loader: 验证数据加载器
+            config: 配置参数对象，包含学习率等超参数
+        """
         self.config = config
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = None
@@ -81,15 +105,29 @@ class ICRProbeTrainer:
             json.dump(self.config.__dict__, f, indent=4)
 
     def _train_epoch(self):
-        """Run one epoch of training."""
+        """
+        执行一个训练周期。
+        
+        包括以下步骤：
+        1. 将模型设置为训练模式
+        2. 遍历训练数据批次
+        3. 前向传播计算损失
+        4. 反向传播更新参数
+        
+        Returns:
+            float: 该周期的平均训练损失
+        """
         self.model.train()
         total_loss = 0
         for X_batch, y_batch in self.train_loader:
+            # 将数据移动到指定设备
             X_batch, y_batch = X_batch.to(self.device), y_batch.to(self.device)
             
+            # 清零梯度，前向传播，计算损失
             self.optimizer.zero_grad()
             outputs = self.model(X_batch)
             loss = self.criterion(outputs, y_batch.unsqueeze(1))
+            # 反向传播，更新参数
             loss.backward()
             self.optimizer.step()
             
@@ -98,7 +136,21 @@ class ICRProbeTrainer:
         return total_loss / len(self.train_loader)
 
     def _validate_epoch(self):
-        """Run validation and compute metrics."""
+        """
+        执行一个验证周期并计算各项评估指标。
+        
+        计算的指标包括：
+        - 验证损失
+        - 准确率、精确率、召回率
+        - F1分数
+        - ROC-AUC曲线
+        - 皮尔逊相关系数（PCC）
+        - 最优阈值
+        - 正负样本的平均预测值
+        
+        Returns:
+            Dict: 包含所有计算得到的评估指标
+        """
         self.model.eval()
         metrics = {}
         val_losses = []
